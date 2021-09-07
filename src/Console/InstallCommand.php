@@ -25,15 +25,16 @@ class InstallCommand extends Command
             copy(__DIR__.'/../../vendor/laravel-lang/lang/locales/es/validation.php', resource_path('lang/es/validation.php'));
         }
 
+        // Set config('app.locale') to 'es'
         $this->pregReplaceInFile("/('locale')\s{0,}(=>)\s{0,}(')[A-Za-z_-]+(')\s{0,}(,)/", "'locale' => 'es',", config_path('app.php'));
 
-        $this->info('Language installed successful');
+        $this->info('Language spanish installed successful');
     }
 
     /**
-     * Replace a given string within a given file.
+     * Replace a given string within a given file matching with a regular expression.
      *
-     * @param  string  $search
+     * @param  string  $search // (RegExp)
      * @param  string  $replace
      * @param  string  $path
      * @return void

@@ -10,7 +10,7 @@ class PublishLanguageFilesTest extends TestCase
     function command_publishes_language_files()
     {
         $this->artisan('lang:add-spanish')
-            ->expectsOutput('Language installed successful');
+            ->expectsOutput('Language spanish installed successful');
 
         $this->assertTrue(true);
     }
