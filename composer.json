@@ -29,10 +29,7 @@
         "laravel": {
             "providers": [
                 "Luisprmat\\Spanish\\SpanishServiceProvider"
-            ],
-            "aliases": {
-                "Hello": "Luisprmat\\Spanish\\Facades\\SpanishHello"
-            }
+            ]
         }
     }
 }
