@@ -22,7 +22,7 @@ This command also modifies the key `locale` in `config/app.php` to set the defau
 
 This command can also receive the following options:
 - `-I` or `--inline` : Install `validation.php` with generic attributes, i. e no name for attribute (The placeholder `:attribute` is replaced by a generic name as _This field_, etc)
-- `-D` or `--no-def` : This option prevents the `config/app.php` file from being modified. Therefore, the default language that appears in `config/app` will remain unchanged.
+- `-D` or `--no-default` : This option prevents the `config/app.php` file from being modified. Therefore, the default language that appears in `config/app` will remain unchanged.
 
 ### Examples
 
