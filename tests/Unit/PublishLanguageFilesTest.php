@@ -15,7 +15,7 @@ class PublishLanguageFilesTest extends TestCase
         $this->artisan('lang:add fr')
             ->expectsOutput("Language [fr] installed successfully as default.");
 
-        $this->artisan('lang:add fr --no-def')
+        $this->artisan('lang:add fr --no-default')
             ->expectsOutput("Language [fr] installed successfully, but it isn't the default language.");
     }
 }

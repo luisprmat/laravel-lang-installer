@@ -9,7 +9,7 @@ class InstallCommand extends Command
 {
     protected $signature = 'lang:add {locale=es : The language that should be installed (es, fr, pt, ...)}
                                      {--I|inline : Install validation.php with generic attributes (no name for attribute)}
-                                     {--D|no-def : It does not change the default language in config/app.php}';
+                                     {--D|no-default : It does not change the default language in config/app.php}';
 
     protected $description = "Install translations for language 'locale' (default 'es')";
 
@@ -31,7 +31,7 @@ class InstallCommand extends Command
 
         $this->loadJsonFile($locale);
 
-        if (!$this->option('no-def')) {
+        if (!$this->option('no-default')) {
             // Set config('app.locale')
             $this->pregReplaceInFile("/('locale')\s{0,}(=>)\s{0,}(')[A-Za-z_-]+(')\s{0,}(,)/", "'locale' => '{$locale}',", config_path('app.php'));
             $this->info("Language [{$locale}] installed successfully as default.");
