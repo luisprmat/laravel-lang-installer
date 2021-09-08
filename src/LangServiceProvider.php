@@ -1,10 +1,10 @@
 <?php
 
-namespace Luisprmat\Spanish;
+namespace Luisprmat\LaravelLangInstaller;
 
 use Illuminate\Support\ServiceProvider;
 
-class SpanishServiceProvider extends ServiceProvider
+class LangServiceProvider extends ServiceProvider
 {
     public function boot()
     {

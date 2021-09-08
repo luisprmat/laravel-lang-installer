@@ -1,8 +1,8 @@
 <?php
 
-namespace Luisprmat\Spanish\Tests\Unit;
+namespace Luisprmat\LaravelLangInstaller\Tests\Unit;
 
-use Luisprmat\Spanish\Tests\TestCase;
+use Luisprmat\LaravelLangInstaller\Tests\TestCase;
 
 class ReplaceInFileTest extends TestCase
 {
@@ -13,7 +13,7 @@ class ReplaceInFileTest extends TestCase
          * This regular expression must be replaced in the first argument of the method call
          *     pregReplaceInFile($regex, _ , _ )
          * of the class
-         * @see    \Luisprmat\Spanish\Console\InstallCommand::class
+         * @see    \Luisprmat\LaravelLangInstaller\Console\InstallCommand::class
          */
 
         $regex = "/('locale')\s{0,}(=>)\s{0,}(')[A-Za-z_-]+(')\s{0,}(,)/";

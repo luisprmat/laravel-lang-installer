@@ -1,6 +1,6 @@
 {
-    "name": "luisprmat/laravel-spanish",
-    "description": "Add spanish translations for Laravel 7 or higher.",
+    "name": "luisprmat/laravel-lang-installer",
+    "description": "Install translations from laravel-lang/lang package for Laravel 7 or higher",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -17,18 +17,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Luisprmat\\Spanish\\": "src/"
+            "Luisprmat\\LaravelLangInstaller\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Luisprmat\\Spanish\\Tests\\": "tests/"
+            "Luisprmat\\LaravelLangInstaller\\Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Luisprmat\\Spanish\\SpanishServiceProvider"
+                "Luisprmat\\LaravelLangInstaller\\LangServiceProvider"
             ]
         }
     }

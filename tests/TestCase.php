@@ -1,9 +1,8 @@
 <?php
 
-namespace Luisprmat\Spanish\Tests;
+namespace Luisprmat\LaravelLangInstaller\Tests;
 
-use Luisprmat\Spanish\Facades\SpanishHello;
-use Luisprmat\Spanish\SpanishServiceProvider;
+use Luisprmat\LaravelLangInstaller\LangServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase
@@ -11,14 +10,14 @@ class TestCase extends BaseTestCase
     protected function getPackageProviders($app)
     {
         return [
-            SpanishServiceProvider::class
+            LangServiceProvider::class
         ];
     }
 
     protected function getPackageAliases($app)
     {
         return [
-            'Hello' => SpanishHello::class
+            //
         ];
     }
 }

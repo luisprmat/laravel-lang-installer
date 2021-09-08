@@ -1,6 +1,6 @@
 <?php
 
-namespace Luisprmat\Spanish\Console;
+namespace Luisprmat\LaravelLangInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -25,6 +25,8 @@ class InstallCommand extends Command
             copy(__DIR__.'/../../vendor/laravel-lang/lang/locales/es/validation.php', resource_path('lang/es/validation.php'));
         }
 
+        $this->loadJsonFile();
+
         // Set config('app.locale') to 'es'
         $this->pregReplaceInFile("/('locale')\s{0,}(=>)\s{0,}(')[A-Za-z_-]+(')\s{0,}(,)/", "'locale' => 'es',", config_path('app.php'));
 
@@ -42,5 +44,10 @@ class InstallCommand extends Command
     protected function pregReplaceInFile($search, $replace, $path)
     {
         file_put_contents($path, preg_replace($search, $replace, file_get_contents($path)));
+    }
+
+    private function loadJsonFile()
+    {
+        copy(__DIR__.'/../../vendor/laravel-lang/lang/locales/es/es.json', resource_path('lang/es.json'));
     }
 }

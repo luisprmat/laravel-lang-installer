@@ -1,8 +1,8 @@
 <?php
 
-namespace Luisprmat\Spanish\Tests\Unit;
+namespace Luisprmat\LaravelLangInstaller\Tests\Unit;
 
-use Luisprmat\Spanish\Tests\TestCase;
+use Luisprmat\LaravelLangInstaller\Tests\TestCase;
 
 class PublishLanguageFilesTest extends TestCase
 {
