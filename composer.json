@@ -1,6 +1,7 @@
 {
     "name": "luisprmat/laravel-lang-installer",
     "description": "Install translations from laravel-lang/lang package for Laravel 7 or higher",
+    "keywords": ["laravel", "lang", "translator"],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -26,6 +27,9 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Luisprmat\\LaravelLangInstaller\\LangServiceProvider"
