@@ -1,0 +1,6 @@
+/tests  export-ignore
+phpunit.xml export-ignore
+phpunit.xml.dist export-ignore
+.editorconfig export-ignore
+.gitignore export-ignore
+.gitattibutes export-ignore
