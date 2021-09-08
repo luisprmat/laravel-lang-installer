@@ -19,14 +19,14 @@ class InstallCommand extends Command
 
         (new Filesystem)->ensureDirectoryExists(resource_path("lang/{$locale}"));
 
-        copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/auth.php", resource_path("lang/{$locale}/auth.php"));
-        copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/pagination.php", resource_path("lang/{$locale}/pagination.php"));
-        copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/passwords.php", resource_path("lang/{$locale}/passwords.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/auth.php"), resource_path("lang/{$locale}/auth.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/pagination.php"), resource_path("lang/{$locale}/pagination.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/passwords.php"), resource_path("lang/{$locale}/passwords.php"));
 
         if ($this->option('inline')) {
-            copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/validation-inline.php", resource_path("lang/{$locale}/validation.php"));
+            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-inline.php"), resource_path("lang/{$locale}/validation.php"));
         } else {
-            copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/validation.php", resource_path("lang/{$locale}/validation.php"));
+            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation.php"), resource_path("lang/{$locale}/validation.php"));
         }
 
         $this->loadJsonFile($locale);
@@ -55,6 +55,6 @@ class InstallCommand extends Command
 
     private function loadJsonFile($locale)
     {
-        copy(__DIR__ . "/../../vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json", resource_path("lang/{$locale}.json"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json"), resource_path("lang/{$locale}.json"));
     }
 }
