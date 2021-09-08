@@ -14,11 +14,11 @@ composer require luisprmat/laravel-lang-installer --dev
 
 After install a new laravel application with `Laravel >= 5.5` the package autodiscover system will register the new command `lang:add`.
 
-This command can receive a unique argument (or none) that will be the short name of the language according to **ISO 15897**.
+This command can take a unique argument (or none) that will be the short name of the language according to **ISO 15897**.
 
 If this command does not receive arguments, the Spanish language [`es`] will be installed by default.
 
-This command also modifies the key `locale` in `config/app.php` to set the default language as passed through the parameter.
+This command also modifies the key `locale` in the `config/app.php` file to set the default language as passed through the parameter.
 
 This command can also receive the following options:
 - `-I` or `--inline` : Install `validation.php` with generic attributes, i. e no name for attribute (The placeholder `:attribute` is replaced by a generic name as _This field_, etc)
