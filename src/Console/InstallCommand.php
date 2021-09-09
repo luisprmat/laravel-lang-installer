@@ -17,6 +17,11 @@ class InstallCommand extends Command
     {
         $locale = (string)$this->argument('locale');
 
+        if (!in_array($locale, $this->getLocales())) {
+            $this->error("Language [{$locale}] is not supported!");
+            return;
+        }
+
         (new Filesystem)->ensureDirectoryExists(resource_path("lang/{$locale}"));
 
         copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/auth.php"), resource_path("lang/{$locale}/auth.php"));
@@ -56,5 +61,23 @@ class InstallCommand extends Command
     private function loadJsonFile($locale)
     {
         copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json"), resource_path("lang/{$locale}.json"));
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLocales(): array
+    {
+        $filesystem = new Filesystem;
+
+        $path = base_path("vendor/laravel-lang/lang/locales");
+        $directories = $filesystem->directories($path);
+
+        $locales = [];
+
+        foreach ($directories as $directory) {
+            $locales[] = $filesystem->name($directory);
+        }
+        return $locales;
     }
 }
