@@ -56,7 +56,7 @@ php artisan lang:add ar --inline
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-This package does not modify the translations, only copies them of [`laravel-lang/lang`](https://github.com/Laravel-Lang/lang/). So if you want to suggest changes in the translations you can make a PR to the [`laravel-lang/lang` package](https://github.com/Laravel-Lang/lang/blob/master/docs/contributing-to-dev.md)
+This package does not modify the translations, only copies them from [`laravel-lang/lang`](https://github.com/Laravel-Lang/lang/). So if you want to suggest changes in the translations you can make a PR to the [`laravel-lang/lang` package](https://github.com/Laravel-Lang/lang/blob/master/docs/contributing-to-dev.md)
 
 ## License
 [MIT](LICENSE.md)
