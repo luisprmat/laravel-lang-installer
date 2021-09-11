@@ -20,7 +20,7 @@ class InstallLanguageTest extends TestCase
     protected function tearDown(): void
     {
         parent::tearDown();
-//        File::deleteDirectory(config_path());
+        File::deleteDirectory(config_path());
         File::deleteDirectory(resource_path());
     }
 
