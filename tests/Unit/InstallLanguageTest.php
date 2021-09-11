@@ -61,13 +61,6 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function command_install_supported_language_with_validation_inline()
-    {
-        $this->artisan('lang:add es --inline')
-            ->expectsOutput("Language [es] installed successfully as default.");
-    }
-
-    /** @test */
     function command_doesnt_install_language_if_not_supported()
     {
         $this->assertFalse(File::exists(resource_path('lang/no_valid')));
