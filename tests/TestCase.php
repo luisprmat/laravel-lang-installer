@@ -13,11 +13,4 @@ class TestCase extends BaseTestCase
             LangServiceProvider::class
         ];
     }
-
-    protected function getPackageAliases($app)
-    {
-        return [
-            //
-        ];
-    }
 }

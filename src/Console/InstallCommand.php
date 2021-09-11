@@ -17,7 +17,7 @@ class InstallCommand extends Command
     {
         $locale = (string)$this->argument('locale');
 
-        if (!in_array($locale, $this->getLocales())) {
+        if (!in_array($locale, $this->getLocales(base_path('vendor/laravel-lang/lang/locales')))) {
             $this->error("Language [{$locale}] is not supported!");
             return;
         }
@@ -66,11 +66,10 @@ class InstallCommand extends Command
     /**
      * @return array
      */
-    protected function getLocales(): array
+    protected function getLocales(string $path): array
     {
         $filesystem = new Filesystem;
 
-        $path = base_path("vendor/laravel-lang/lang/locales");
         $directories = $filesystem->directories($path);
 
         $locales = [];
