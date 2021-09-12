@@ -1,4 +1,16 @@
-# Laravel Lang Installer
+<h1 align="center">Laravel Lang Installer</h1>
+
+<p align="center">
+    <a href="https://packagist.org/packages/luisprmat/laravel-lang-installer">
+        <img src="https://img.shields.io/packagist/dt/luisprmat/laravel-lang-installer" alt="Total Downloads">
+    </a>
+    <a href="https://packagist.org/packages/luisprmat/laravel-lang-installer">
+        <img src="https://img.shields.io/packagist/v/luisprmat/laravel-lang-installer" alt="Latest Stable Version">
+    </a>
+    <a href="https://packagist.org/packages/luisprmat/laravel-lang-installer">
+        <img src="https://img.shields.io/packagist/l/luisprmat/laravel-lang-installer" alt="License">
+    </a>
+</p>
 
 This package helps us to quickly install the language files in a preferably fresh Laravel application.
 

@@ -22,6 +22,7 @@ class InstallLanguageTest extends TestCase
         parent::tearDown();
         File::deleteDirectory(config_path());
         File::deleteDirectory(resource_path());
+        File::delete(base_path('composer.json'));
     }
 
     /** @test */
@@ -138,6 +139,64 @@ JSON;
         $this->assertEquals(
             $expected,
             File::get(resource_path('lang/xx_GB.json'))
+        );
+    }
+
+    /** @test */
+    function it_doesnt_execute_if_composer_json_doesnt_exist()
+    {
+        $this->artisan('lang:add')
+            ->expectsOutput('composer.json not found!')
+            ->assertExitCode(0);
+    }
+
+    /** @test */
+    function it_discovers_supported_packages_installed_from_composer_json()
+    {
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"laravel/cashier": "^13.5"', '"package/other": "^2.0"'],
+            ['"laravel/breeze": "^1.4"', '"laravel/no-supported": "^1.0"']
+        ));
+
+        $command = $this->artisan('lang:add');
+        $command->expectsOutput('Translations for [breeze, cashier] packages merged!');
+
+        $this->setUp();
+
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"package/other": "^2.0"'],
+            ['"laravel/breeze": "^1.4"', '"laravel/no-supported": "^1.0"']
+        ));
+
+        $command = $this->artisan('lang:add');
+        $command->expectsOutput('Translations for [breeze] package merged!');
+
+        $this->setUp();
+
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"laravel/cashier": "^13.5"'], []
+        ));
+
+        $command = $this->artisan('lang:add');
+        $command->expectsOutput('Translations for [cashier] package merged!');
+    }
+
+    /**
+     * @param array $require
+     * @param array $requireDev
+     * @return string
+     */
+    private function buildComposerWithDependencies(array $require = [], array $requireDev = []): string
+    {
+        $composerString = '{"name":"luisprmat/package","require":{';
+        $composerString .= implode(',', $require);
+        $composerString .= '},"require-dev": {';
+        $composerString .= implode(',', $requireDev);
+        $composerString .= '}}';
+
+        return json_encode(
+            json_decode($composerString),
+            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
         );
     }
 }
