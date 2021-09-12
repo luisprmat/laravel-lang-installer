@@ -25,7 +25,7 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function installs_supported_language()
+    function it_installs_supported_language()
     {
         $this->assertFalse(File::exists(resource_path('lang/xx_GB')));
         $this->assertFalse(File::exists(resource_path('lang/xx_GB/auth.php')));
@@ -47,23 +47,31 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function installs_supported_language_with_validation_inline()
+    function it_installs_supported_language_with_validation_inline()
     {
         $this->artisan('lang:add es --inline')
             ->expectsOutput("Language [es] installed successfully as default.");
 
-        //TODO: Test if generated file match
+        $this->assertStringContainsString(
+            'El campo debe ser verdadero o falso.',
+            File::get(resource_path('lang/es/validation.php'))
+        );
+
+        $this->assertStringNotContainsString(
+            'El campo :attribute debe tener un valor verdadero o falso.',
+            File::get(resource_path('lang/es/validation.php'))
+        );
     }
 
     /** @test */
-    function installs_spanish_language_by_default()
+    function it_installs_spanish_language_by_default()
     {
         $this->artisan('lang:add')
             ->expectsOutput("Language [es] installed successfully as default.");
     }
 
     /** @test */
-    function doesnt_install_language_if_not_supported()
+    function it_doesnt_install_language_if_not_supported()
     {
         $this->assertFalse(File::exists(resource_path('lang/no_valid')));
         $this->artisan('lang:add no-valid')
@@ -76,7 +84,7 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function modifies_config_app_locale_by_default()
+    function it_modifies_config_app_locale_by_default()
     {
         $this->assertTrue(File::exists(config_path('app.php')));
         $this->assertTrue(Str::contains(File::get(config_path('app.php')), "'locale' => 'en'"));
@@ -89,7 +97,7 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function doesnt_modify_config_app_locale_if_pass_no_default_option()
+    function it_doesnt_modify_config_app_locale_if_pass_no_default_option()
     {
         $this->assertTrue(File::exists(config_path('app.php')));
         $this->assertTrue(Str::contains(File::get(config_path('app.php')), "'locale' => 'en'"));
@@ -102,7 +110,7 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function install_json_locale_only_with_base_translations()
+    function it_install_json_locale_only_with_base_translations()
     {
         $this->artisan('lang:add es');
         $expected = <<<JSON
