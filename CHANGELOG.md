@@ -8,11 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.2] - 2021-09-09
 ### Fixed
-- Validate argument [`locale`] of command
+- *Validate argument*: Stop execution if language is not supported.
 
 ## [1.0.1] - 2021-09-08
 ### Fixed
-- Change directory path in `InstallCommand`
+- *Fix installation:* the `base_path` was wrong.
 
 ## [1.0.0] - 2021-09-08
-### Initial release
+Initial release
