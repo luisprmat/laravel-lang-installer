@@ -4,6 +4,7 @@ namespace Luisprmat\LaravelLangInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\File;
 
 class InstallCommand extends Command
 {
@@ -60,10 +61,32 @@ class InstallCommand extends Command
 
     private function loadJsonFile($locale)
     {
-        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json"), resource_path("lang/{$locale}.json"));
+        $baseSource = json_decode(File::get(base_path('vendor/laravel-lang/lang/source/en.json')));
+        $jsonLocale = json_decode(File::get(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json")), true);
+
+        $modify = array_filter($jsonLocale, function ($item) use ($baseSource) {
+            return in_array($item, $baseSource);
+        }, ARRAY_FILTER_USE_KEY);
+
+        $modifiedJson = json_encode($modify, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+//        dd($baseSource, $jsonLocale, $modifiedJson);
+//        $modifiedJson = <<<JSON
+//{
+//    "Add Base": "Añadir base",
+//    "Changes Base": "Cambios base",
+//    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
+//    "Whoops! all": "¡Ups! todo"
+//}
+//
+//JSON;
+
+//        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json"), resource_path("lang/{$locale}.json"));
+        File::put(resource_path("lang/{$locale}.json"), $modifiedJson);
     }
 
     /**
+     * @param string $path
      * @return array
      */
     protected function getLocales(string $path): array

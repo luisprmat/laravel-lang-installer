@@ -100,4 +100,36 @@ class InstallLanguageTest extends TestCase
         $this->assertFalse(Str::contains(File::get(config_path('app.php')), "'locale' => 'xx_GB'"));
         $this->assertTrue(Str::contains(File::get(config_path('app.php')), "'locale' => 'en'"));
     }
+
+    /** @test */
+    function install_json_locale_only_with_base_translations()
+    {
+        $this->artisan('lang:add es');
+        $expected = <<<JSON
+{
+    "Add Base": "Añadir base",
+    "Changes Base": "Cambios base",
+    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
+    "Whoops! all": "¡Ups! todo"
+}
+JSON;
+        $this->assertEquals(
+            $expected,
+            File::get(resource_path('lang/es.json'))
+        );
+
+        $this->artisan('lang:add xx_GB');
+        $expected = <<<JSON
+{
+    "Add Base": "Add base",
+    "Changes Base": "Changes base",
+    "If you already have an account, you may accept this invitation by clicking the button below: base": "If you already have an account, you may accept this invitation by clicking the button below: base",
+    "Whoops! all": "Whoops! all"
+}
+JSON;
+        $this->assertEquals(
+            $expected,
+            File::get(resource_path('lang/xx_GB.json'))
+        );
+    }
 }
