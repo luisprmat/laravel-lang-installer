@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2021-09-13
+### Added
+- Discover supported packages from `composer.json`.
+- Optmize load of `<locale>.json` according to discovered packages [[#3]](https://github.com/luisprmat/laravel-lang-installer/pull/3).
+
 ## [1.0.2] - 2021-09-09
 ### Fixed
 - *Validate argument*: Stop execution if language is not supported.
