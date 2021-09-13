@@ -112,7 +112,7 @@ class InstallLanguageTest extends TestCase
     }
 
     /** @test */
-    function it_install_json_locale_only_with_base_translations()
+    function it_installs_json_locale_only_with_base_translations()
     {
         $this->artisan('lang:add es');
         $expected = <<<JSON
@@ -141,5 +141,85 @@ JSON;
             $expected,
             File::get(resource_path('lang/xx_GB.json'))
         );
+    }
+
+    /** @test */
+    function it_installs_json_with_base_plus_discovered_packages_one()
+    {
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"laravel/cashier": "^13.5"']
+        ));
+
+        $this->artisan('lang:add es');
+        $expected = <<<JSON
+{
+    "Add Base": "Añadir base",
+    "Cancel both": "Cancelar ambos",
+    "Card cashier": "Tarjeta cashier",
+    "Changes Base": "Cambios base",
+    "Confirm your :amount payment cashier": "Confirme su pago de :amount cashier",
+    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
+    "Whoops! all": "¡Ups! todo"
+}
+JSON;
+        $this->assertEquals(
+            $expected,
+            File::get(resource_path('lang/es.json'))
+        );
+
+    }
+
+    /** @test */
+    function it_installs_json_with_base_plus_discovered_packages_other()
+    {
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"laravel/breeze": "^1.4"']
+        ));
+
+        $this->artisan('lang:add es');
+        $expected = <<<JSON
+{
+    "Add Base": "Añadir base",
+    "Cancel both": "Cancelar ambos",
+    "Changes Base": "Cambios base",
+    "Confirm Password breeze": "Confirmar contraseña breeze",
+    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
+    "Log in breeze": "Iniciar sesión breeze",
+    "Whoops! all": "¡Ups! todo"
+}
+JSON;
+        $this->assertEquals(
+            $expected,
+            File::get(resource_path('lang/es.json'))
+        );
+
+    }
+
+    /** @test */
+    function it_installs_json_with_base_plus_discovered_packages_mixed()
+    {
+        File::put(base_path('composer.json'), $this->buildComposerWithDependencies(
+            ['"laravel/cashier": "^13.5"', '"laravel/breeze": "^1.4"']
+        ));
+
+        $this->artisan('lang:add es');
+        $expected = <<<JSON
+{
+    "Add Base": "Añadir base",
+    "Cancel both": "Cancelar ambos",
+    "Card cashier": "Tarjeta cashier",
+    "Changes Base": "Cambios base",
+    "Confirm Password breeze": "Confirmar contraseña breeze",
+    "Confirm your :amount payment cashier": "Confirme su pago de :amount cashier",
+    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
+    "Log in breeze": "Iniciar sesión breeze",
+    "Whoops! all": "¡Ups! todo"
+}
+JSON;
+        $this->assertEquals(
+            $expected,
+            File::get(resource_path('lang/es.json'))
+        );
+
     }
 }

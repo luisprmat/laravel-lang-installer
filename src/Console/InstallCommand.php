@@ -49,6 +49,12 @@ class InstallCommand extends Command
         }
 
         $discoveredPackages = $this->discoveredPackages();
+
+        // Add 'fortify' translations if 'jetstream' is installed
+        if (in_array('jetstream', $discoveredPackages)) {
+            array_push($discoveredPackages, 'fortify');
+        }
+
         $this->loadJsonFile($locale, $discoveredPackages);
 
         if (!$this->option('no-default')) {
@@ -85,24 +91,24 @@ class InstallCommand extends Command
         $baseSource = json_decode(File::get(base_path('vendor/laravel-lang/lang/source/en.json')));
         $jsonLocale = json_decode(File::get(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json")), true);
 
-        $modify = array_filter($jsonLocale, function ($item) use ($baseSource) {
-            return in_array($item, $baseSource);
+        $showTags = $baseSource;
+
+        foreach ($packages as $package) {
+            $showTags = array_merge(
+                $showTags,
+                json_decode(File::get(base_path("vendor/laravel-lang/lang/source/packages/{$package}.json")))
+            );
+        }
+
+        $showTags = array_unique($showTags);
+        sort($showTags);
+
+        $modify = array_filter($jsonLocale, function ($item) use ($showTags) {
+            return in_array($item, $showTags);
         }, ARRAY_FILTER_USE_KEY);
 
         $modifiedJson = json_encode($modify, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-//        dd($baseSource, $jsonLocale, $modifiedJson);
-//        $modifiedJson = <<<JSON
-//{
-//    "Add Base": "Añadir base",
-//    "Changes Base": "Cambios base",
-//    "If you already have an account, you may accept this invitation by clicking the button below: base": "Si ya tiene una cuenta, puede aceptar esta invitación haciendo clic en el botón de abajo: base",
-//    "Whoops! all": "¡Ups! todo"
-//}
-//
-//JSON;
-
-//        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json"), resource_path("lang/{$locale}.json"));
         File::put(resource_path("lang/{$locale}.json"), $modifiedJson);
     }
 
