@@ -5,6 +5,7 @@ namespace Luisprmat\LaravelLangInstaller\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 class InstallCommand extends Command
 {
@@ -14,12 +15,24 @@ class InstallCommand extends Command
 
     protected $description = "Install translations for language 'locale' (default 'es')";
 
+    private array $supportedPackages = [
+        'breeze' => 'laravel/breeze',
+        'fortify' => 'laravel/fortify',
+        'cashier' => 'laravel/cashier',
+        'jetstream' => 'laravel/jetstream'
+    ];
+
     public function handle()
     {
         $locale = (string)$this->argument('locale');
 
         if (!in_array($locale, $this->getLocales(base_path('vendor/laravel-lang/lang/locales')))) {
             $this->error("Language [{$locale}] is not supported!");
+            return;
+        }
+
+        if (!File::exists(base_path('composer.json'))) {
+            $this->error('composer.json not found!');
             return;
         }
 
@@ -35,7 +48,8 @@ class InstallCommand extends Command
             copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation.php"), resource_path("lang/{$locale}/validation.php"));
         }
 
-        $this->loadJsonFile($locale);
+        $discoveredPackages = $this->discoveredPackages();
+        $this->loadJsonFile($locale, $discoveredPackages);
 
         if (!$this->option('no-default')) {
             // Set config('app.locale')
@@ -43,6 +57,13 @@ class InstallCommand extends Command
             $this->info("Language [{$locale}] installed successfully as default.");
         } else {
             $this->info("Language [{$locale}] installed successfully, but it isn't the default language.");
+        }
+
+        if (!empty($discoveredPackages)) {
+            $this->info(
+                'Translations for ['. implode(', ', $discoveredPackages) .'] '
+                . Str::plural('package', count($discoveredPackages)) .' merged!'
+            );
         }
     }
 
@@ -59,7 +80,7 @@ class InstallCommand extends Command
         file_put_contents($path, preg_replace($search, $replace, file_get_contents($path)));
     }
 
-    private function loadJsonFile($locale)
+    private function loadJsonFile($locale, $packages = [])
     {
         $baseSource = json_decode(File::get(base_path('vendor/laravel-lang/lang/source/en.json')));
         $jsonLocale = json_decode(File::get(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json")), true);
@@ -101,5 +122,25 @@ class InstallCommand extends Command
             $locales[] = $filesystem->name($directory);
         }
         return $locales;
+    }
+
+    /**
+     * Returns list of installed packages that are supported according to composer.json
+     *
+     * @return array
+     */
+    protected function discoveredPackages(): array
+    {
+        $composer = json_decode(File::get(base_path('composer.json')), true);
+
+        $jsonToCreate = array_keys(array_merge($composer['require'], $composer['require-dev']));
+
+        $packagesToInstall = array_filter($jsonToCreate, function ($package) {
+            return in_array($package, $this->supportedPackages);
+        });
+
+        return array_keys(array_filter($this->supportedPackages, function ($package) use ($packagesToInstall) {
+            return in_array($package, $packagesToInstall);
+        }));
     }
 }
