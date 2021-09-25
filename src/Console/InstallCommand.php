@@ -52,7 +52,7 @@ class InstallCommand extends Command
 
         // Add 'fortify' translations if 'jetstream' is installed
         if (in_array('jetstream', $discoveredPackages)) {
-            array_push($discoveredPackages, 'fortify');
+            array_push($discoveredPackages, 'fortify', 'jetstream-ext');
         }
 
         $this->loadJsonFile($locale, $discoveredPackages);
