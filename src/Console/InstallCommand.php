@@ -4,6 +4,7 @@ namespace Luisprmat\LaravelLangInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -64,6 +65,10 @@ class InstallCommand extends Command
             $this->info("Language [{$locale}] installed successfully as default.");
         } else {
             $this->info("Language [{$locale}] installed successfully, but it isn't the default language.");
+        }
+
+        if (in_array('jetstream-ext', $discoveredPackages)) {
+            unset($discoveredPackages[array_search('jetstream-ext', $discoveredPackages)]);
         }
 
         if (!empty($discoveredPackages)) {
