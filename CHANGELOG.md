@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2021-09-28
+### Added
+- Support for jetstream-ext
+- Support for `laravel-lang/lang` `v10.1.7` (merge attributes)
+
 ## [1.1.0] - 2021-09-13
 ### Added
 - Discover supported packages from `composer.json`.
