@@ -46,13 +46,14 @@ class InstallCommand extends Command
             copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-inline.php"), resource_path("lang/{$locale}/validation.php"));
         } else {
             copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation.php"), resource_path("lang/{$locale}/validation.php"));
+            $this->mergeAttributes($locale);
         }
 
         $discoveredPackages = $this->discoveredPackages();
 
         // Add 'fortify' translations if 'jetstream' is installed
         if (in_array('jetstream', $discoveredPackages)) {
-            array_push($discoveredPackages, 'fortify');
+            array_push($discoveredPackages, 'fortify', 'jetstream-ext');
         }
 
         $this->loadJsonFile($locale, $discoveredPackages);
@@ -67,8 +68,8 @@ class InstallCommand extends Command
 
         if (!empty($discoveredPackages)) {
             $this->info(
-                'Translations for ['. implode(', ', $discoveredPackages) .'] '
-                . Str::plural('package', count($discoveredPackages)) .' merged!'
+                'Translations for [' . implode(', ', $discoveredPackages) . '] '
+                . Str::plural('package', count($discoveredPackages)) . ' merged!'
             );
         }
     }
@@ -148,5 +149,38 @@ class InstallCommand extends Command
         return array_keys(array_filter($this->supportedPackages, function ($package) use ($packagesToInstall) {
             return in_array($package, $packagesToInstall);
         }));
+    }
+
+    private function mergeAttributes($locale)
+    {
+        $attributesSource = base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-attributes.php");
+        if (!File::exists($attributesSource)) return;
+
+        $attributes = File::get($attributesSource);
+
+        $separator = <<<PHP
+return [
+
+PHP;
+        $endOfLine = <<<PHP
+];
+
+PHP;
+        $attributes = Str::replace($endOfLine, "];", $attributes);
+        $split = explode($separator, $attributes);
+        $this->replaceInFile("];", $split[1], resource_path("lang/{$locale}/validation.php"));
+    }
+
+    /**
+     * Replace a given string within a given file.
+     *
+     * @param  string  $search
+     * @param  string  $replace
+     * @param  string  $path
+     * @return void
+     */
+    protected function replaceInFile($search, $replace, $path)
+    {
+        file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
 }
