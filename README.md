@@ -72,7 +72,7 @@ php artisan lang:add ar --inline
 ```
 
 ## Supported languages
-`af`, `ar`, `az`, `be`, `bg`, `bn`, `bs`, `ca`, `cs`, `cy`, `da`, `de`, `de_CH`, `el`, `es`, `et`, `eu`, `fa`, `fi`, `fil`, `fr`, `gl`, `he`, `hi`, `hr`, `hu`, `hy`, `id`, `is`, `it`, `ja`, `ka`, `kk`, `km`, `kn`, `ko`, `lt`, `lv`, `mk`, `mn`, `mr`, `ms`, `nb`, `ne`, `nl`, `nn`, `oc`, `pl`, `ps`, `pt`, `pt_BR`, `ro`, `ru`, `sc`, `si`, `sk`, `sl`, `sq`, `sr_Cyrl`, `sr_Latn`, `sr_Latn_ME`, `sv`, `sw`, `tg`, `th`, `tk`, `tl`, `tr`, `ug`, `uk`, `ur`, `uz_Cyrl`, `uz_Latn`, `vi`, `zh_CN`, `zh_HK`, `zh_TW`
+`af`, `ar`, `az`, `be`, `bg`, `bn`, `bs`, `ca`, `cs`, `cy`, `da`, `de`, `de_CH`, `el`, `es`, `et`, `eu`, `fa`, `fi`, `fil`, `fr`, `gl`, `gu`, `he`, `hi`, `hr`, `hu`, `hy`, `id`, `is`, `it`, `ja`, `ka`, `kk`, `km`, `kn`, `ko`, `lt`, `lv`, `mk`, `mn`, `mr`, `ms`, `nb`, `ne`, `nl`, `nn`, `oc`, `pl`, `ps`, `pt`, `pt_BR`, `ro`, `ru`, `sc`, `si`, `sk`, `sl`, `sq`, `sr_Cyrl`, `sr_Latn`, `sr_Latn_ME`, `sv`, `sw`, `tg`, `th`, `tk`, `tl`, `tr`, `ug`, `uk`, `ur`, `uz_Cyrl`, `uz_Latn`, `vi`, `zh_CN`, `zh_HK`, `zh_TW`
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

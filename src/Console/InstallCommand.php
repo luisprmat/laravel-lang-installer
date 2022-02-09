@@ -133,6 +133,7 @@ class InstallCommand extends Command
         foreach ($directories as $directory) {
             $locales[] = $filesystem->name($directory);
         }
+
         return $locales;
     }
 
