@@ -22,30 +22,30 @@ class InstallLanguageTest extends TestCase
     {
         parent::tearDown();
         File::deleteDirectory(config_path());
-        File::deleteDirectory(resource_path());
+        File::deleteDirectory(base_path('lang'));
         File::delete(base_path('composer.json'));
     }
 
     /** @test */
     function it_installs_supported_language()
     {
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB')));
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB/auth.php')));
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB/passwords.php')));
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB/pagination.php')));
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB/validation.php')));
-        $this->assertFalse(File::exists(resource_path('lang/xx_GB.json')));
+        $this->assertFalse(File::exists(lang_path('xx_GB')));
+        $this->assertFalse(File::exists(lang_path('xx_GB/auth.php')));
+        $this->assertFalse(File::exists(lang_path('xx_GB/passwords.php')));
+        $this->assertFalse(File::exists(lang_path('xx_GB/pagination.php')));
+        $this->assertFalse(File::exists(lang_path('xx_GB/validation.php')));
+        $this->assertFalse(File::exists(lang_path('xx_GB.json')));
 
         $this->artisan('lang:add xx_GB')
             ->expectsOutput("Language [xx_GB] installed successfully as default.")
             ->doesntExpectOutput("Language [es] installed successfully as default.");
 
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB')));
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB/auth.php')));
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB/passwords.php')));
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB/pagination.php')));
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB/validation.php')));
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB.json')));
+        $this->assertTrue(File::exists(lang_path('xx_GB')));
+        $this->assertTrue(File::exists(lang_path('xx_GB/auth.php')));
+        $this->assertTrue(File::exists(lang_path('xx_GB/passwords.php')));
+        $this->assertTrue(File::exists(lang_path('xx_GB/pagination.php')));
+        $this->assertTrue(File::exists(lang_path('xx_GB/validation.php')));
+        $this->assertTrue(File::exists(lang_path('xx_GB.json')));
     }
 
     /** @test */
@@ -56,12 +56,12 @@ class InstallLanguageTest extends TestCase
 
         $this->assertStringContainsString(
             'El campo debe ser verdadero o falso.',
-            File::get(resource_path('lang/es/validation.php'))
+            File::get(lang_path('es/validation.php'))
         );
 
         $this->assertStringNotContainsString(
             'El campo :attribute debe tener un valor verdadero o falso.',
-            File::get(resource_path('lang/es/validation.php'))
+            File::get(lang_path('es/validation.php'))
         );
     }
 
@@ -75,11 +75,11 @@ class InstallLanguageTest extends TestCase
     /** @test */
     function it_doesnt_install_language_if_not_supported()
     {
-        $this->assertFalse(File::exists(resource_path('lang/no_valid')));
+        $this->assertFalse(File::exists(lang_path('no_valid')));
         $this->artisan('lang:add no-valid')
             ->expectsOutput("Language [no-valid] is not supported!");
 
-        $this->assertFalse(File::exists(resource_path('lang/no_valid')));
+        $this->assertFalse(File::exists(lang_path('no_valid')));
 
         $this->artisan('lang:add es')
             ->doesntExpectOutput("Language [es] is not supported!");
@@ -125,7 +125,7 @@ class InstallLanguageTest extends TestCase
 JSON;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/es.json'))
+            File::get(lang_path('es.json'))
         );
 
         $this->artisan('lang:add xx_GB');
@@ -139,7 +139,7 @@ JSON;
 JSON;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/xx_GB.json'))
+            File::get(lang_path('xx_GB.json'))
         );
     }
 
@@ -164,7 +164,7 @@ JSON;
 JSON;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/es.json'))
+            File::get(lang_path('es.json'))
         );
 
     }
@@ -190,7 +190,7 @@ JSON;
 JSON;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/es.json'))
+            File::get(lang_path('es.json'))
         );
 
     }
@@ -218,7 +218,7 @@ JSON;
 JSON;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/es.json'))
+            File::get(lang_path('es.json'))
         );
 
     }

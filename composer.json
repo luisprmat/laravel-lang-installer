@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "laravel-lang/lang": "^10.1"
+        "laravel-lang/lang": "^10.4",
+        "laravel-lang/attributes": "^1.0"
     },
     "require-dev": {
         "orchestra/testbench": "^6.20"
