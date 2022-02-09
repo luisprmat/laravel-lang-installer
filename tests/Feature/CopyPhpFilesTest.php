@@ -22,7 +22,7 @@ class CopyPhpFilesTest extends TestCase
     {
         parent::tearDown();
         File::deleteDirectory(config_path());
-        File::deleteDirectory(resource_path());
+        File::deleteDirectory(base_path('lang'));
         File::delete(base_path('composer.json'));
     }
 
@@ -31,7 +31,7 @@ class CopyPhpFilesTest extends TestCase
     {
         $this->artisan('lang:add');
 
-        $this->assertTrue(File::exists(resource_path('lang/es/validation.php')));
+        $this->assertTrue(File::exists(lang_path('es/validation.php')));
 
         $expected = <<<PHP
 <?php
@@ -51,10 +51,11 @@ return [
     ],
 ];
 
+
 PHP;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/es/validation.php'))
+            File::get(lang_path('es/validation.php'))
         );
     }
 
@@ -63,7 +64,7 @@ PHP;
     {
         $this->artisan('lang:add xx_GB');
 
-        $this->assertTrue(File::exists(resource_path('lang/xx_GB/validation.php')));
+        $this->assertTrue(File::exists(lang_path('xx_GB/validation.php')));
 
         $expected = <<<PHP
 <?php
@@ -86,7 +87,7 @@ return [
 PHP;
         $this->assertEquals(
             $expected,
-            File::get(resource_path('lang/xx_GB/validation.php'))
+            File::get(lang_path('xx_GB/validation.php'))
         );
     }
 }

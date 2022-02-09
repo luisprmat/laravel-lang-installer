@@ -20,7 +20,7 @@ class DiscoverPackagesTest extends TestCase
     {
         parent::tearDown();
         File::deleteDirectory(config_path());
-        File::deleteDirectory(resource_path());
+        File::deleteDirectory(base_path('lang'));
         File::delete(base_path('composer.json'));
     }
 

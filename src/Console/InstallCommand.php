@@ -37,16 +37,16 @@ class InstallCommand extends Command
             return;
         }
 
-        (new Filesystem)->ensureDirectoryExists(resource_path("lang/{$locale}"));
+        (new Filesystem)->ensureDirectoryExists(lang_path("{$locale}"));
 
-        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/auth.php"), resource_path("lang/{$locale}/auth.php"));
-        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/pagination.php"), resource_path("lang/{$locale}/pagination.php"));
-        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/passwords.php"), resource_path("lang/{$locale}/passwords.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/auth.php"), lang_path("{$locale}/auth.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/pagination.php"), lang_path("{$locale}/pagination.php"));
+        copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/passwords.php"), lang_path("{$locale}/passwords.php"));
 
         if ($this->option('inline')) {
-            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-inline.php"), resource_path("lang/{$locale}/validation.php"));
+            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-inline.php"), lang_path("{$locale}/validation.php"));
         } else {
-            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation.php"), resource_path("lang/{$locale}/validation.php"));
+            copy(base_path("vendor/laravel-lang/lang/locales/{$locale}/validation.php"), lang_path("{$locale}/validation.php"));
             $this->mergeAttributes($locale);
         }
 
@@ -115,7 +115,7 @@ class InstallCommand extends Command
 
         $modifiedJson = json_encode($modify, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        File::put(resource_path("lang/{$locale}.json"), $modifiedJson);
+        File::put(lang_path("{$locale}.json"), $modifiedJson);
     }
 
     /**
@@ -158,7 +158,7 @@ class InstallCommand extends Command
 
     private function mergeAttributes($locale)
     {
-        $attributesSource = base_path("vendor/laravel-lang/lang/locales/{$locale}/validation-attributes.php");
+        $attributesSource = base_path("vendor/laravel-lang/attributes/locales/{$locale}/validation.php");
         if (!File::exists($attributesSource)) return;
 
         $attributes = File::get($attributesSource);
@@ -173,7 +173,8 @@ PHP;
 PHP;
         $attributes = Str::replace($endOfLine, "];", $attributes);
         $split = explode($separator, $attributes);
-        $this->replaceInFile("];", $split[1], resource_path("lang/{$locale}/validation.php"));
+
+        $this->replaceInFile("];", $split[1], lang_path("{$locale}/validation.php"));
     }
 
     /**
