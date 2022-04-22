@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2022-04-21
+### Added
+- Support for Laravel-Lang `^10.6` [[#8]](https://github.com/luisprmat/laravel-lang-installer/pull/8)
+
+### Fixed
+- Fix breaking changes with Laravel-lang/lang ^10.6 version, _split Laravel versions._
+
 ## [1.2.1] - 2022-02-09
 ### Added
 - Support for Laravel `^9.0` and Laravel-lang `^10.4` [[#6]](https://github.com/luisprmat/laravel-lang-installer/pull/6)
