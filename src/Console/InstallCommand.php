@@ -4,7 +4,7 @@ namespace Luisprmat\LaravelLangInstaller\Console;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
@@ -94,7 +94,8 @@ class InstallCommand extends Command
 
     private function loadJsonFile($locale, $packages = [])
     {
-        $baseSource = json_decode(File::get(base_path('vendor/laravel-lang/lang/source/en.json')));
+        $majorLaravelVersion = Str::before(Application::VERSION, '.');
+        $baseSource = json_decode(File::get(base_path('vendor/laravel-lang/lang/source/packages/framework/laravel-'.$majorLaravelVersion.'.json')));
         $jsonLocale = json_decode(File::get(base_path("vendor/laravel-lang/lang/locales/{$locale}/{$locale}.json")), true);
 
         $showTags = $baseSource;
