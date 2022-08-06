@@ -1,4 +1,4 @@
-<h1 align="center">Laravel Lang Installer</h1>
+<h1 align="center">Laravel Lang Installer (Archived)</h1>
 
 <p align="center">
     <a href="https://packagist.org/packages/luisprmat/laravel-lang-installer">
@@ -11,6 +11,10 @@
         <img src="https://img.shields.io/packagist/l/luisprmat/laravel-lang-installer" alt="License">
     </a>
 </p>
+
+## _This package is archived_
+The Laravel Lang package has had extreme changes incompatibles with this package. 
+Use Laravel-lang/publisher instead.
 
 This package helps us to quickly install the language files in a preferably fresh Laravel application.
 
